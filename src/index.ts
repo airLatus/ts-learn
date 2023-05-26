@@ -1,101 +1,56 @@
-let say = "hello";
+type Color = "♥️" | "♣️" | "♦️" | "♠️";
 
-function sum(a: number, b: number) {
-  return a + b;
-}
-
-let num = sum(1, 2);
-
-let res;
-
-let phoneNum: string = "123";
-
-function isOdd(n: number): boolean {
-  return n % 2 !== 0;
-}
-
-console.log(isOdd(3));
-
-let ary: Array<number>;
-
-let ary2: number[];
-
-let nObj: object = {
-  name: "Allen Yeager",
-  age: 19,
+type NormalCard = {
+  color: Color;
+  mark: number;
 };
 
-function printValues(obj: object) {
-  const vals = Object.values(obj);
-  vals.forEach((item) => console.log(item));
-}
+type Deck = NormalCard[];
 
-printValues(nObj);
-
-let name: string | undefined;
-
-if (typeof name === "string") {
-  // 类型保护
-  name;
-}
-
-//  这个两个函数不会结束
-function throwError(msg: string): never {
-  throw new Error(msg);
-}
-function alwaysLoad(): never {
-  while (true) {
-    //...
+function createDeck(): Deck {
+  const deck: Deck = [];
+  for (let index = 1; index < 13; index++) {
+    deck.push({
+      mark: index,
+      color: "♠️",
+    });
+    deck.push({
+      mark: index,
+      color: "♣️",
+    });
+    deck.push({
+      mark: index,
+      color: "♥️",
+    });
+    deck.push({
+      mark: index,
+      color: "♦️",
+    });
   }
+  return deck;
 }
 
-let gender: "男" | "女";
-
-let tu: [string, number];
-
-tu = ["s", 2];
-
-type Gender = "男" | "女";
-
-type OType = {
-  name: string;
-  age: number;
-  gender: Gender;
-};
-
-let o: OType[] = [
-  {
-    name: "Allen yeager",
-    age: 19,
-    gender: "男",
-  },
-];
-
-function getUser(): OType[] {
-  return [];
+function printDeck(deck: Deck) {
+  let result = "\n";
+  deck.forEach((card, i) => {
+    let str = card.color;
+    let mark = card.mark;
+    if (mark <= 10) {
+      str += card.mark;
+    } else if (mark === 11) {
+      str += "J";
+    } else if (mark === 12) {
+      str += "Q";
+    } else if (mark === 13) {
+      str += "K";
+    }
+    result += str + "\t";
+    if ((i + 1) % 4 === 0) {
+      result += "\n";
+    }
+    console.log(result);
+  });
 }
 
-function combine(a: number, b: number): number;
-function combine(a: string, b: string): string;
-
-function combine(a: number | string, b: number | string): number | string {
-  if (typeof a === "number" && typeof b === "number") {
-    return a * b;
-  } else if (typeof a === "string" && typeof b === "string") {
-    return a + b;
-  }
-  throw new Error("a和b必须是同类型");
-}
-
-const result = combine(3, 2);
-
-function summary(a: number, b: number, c?: number) {
-  if (c) {
-    return a + b + c;
-  } else {
-    return a + b;
-  }
-}
-
-summary(1, 3);
-summary(1, 3, 9);
+const deck = createDeck();
+printDeck(deck);
