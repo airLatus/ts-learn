@@ -1,31 +1,44 @@
-type Color = "♥️" | "♣️" | "♦️" | "♠️";
+enum Color {
+  HEART = "♥️",
+  SPADE = "♣️",
+  CLUB = "♦️",
+  DIAMOND = "♠️",
+}
+
+enum Mark {
+  A = "A",
+  TWO = "2",
+  THREE = "3",
+  FOUR = "4",
+  FIVE = "5",
+  SIX = "6",
+  SEVEN = "7",
+  EIGHT = "8",
+  NINE = "9",
+  TEN = "10",
+  ELEVEN = "J",
+  TWELVE = "Q",
+  KING = "K",
+}
 
 type NormalCard = {
   color: Color;
-  mark: number;
+  mark: Mark;
 };
 
 type Deck = NormalCard[];
 
 function createDeck(): Deck {
   const deck: Deck = [];
-  for (let index = 1; index < 13; index++) {
-    deck.push({
-      mark: index,
-      color: "♠️",
-    });
-    deck.push({
-      mark: index,
-      color: "♣️",
-    });
-    deck.push({
-      mark: index,
-      color: "♥️",
-    });
-    deck.push({
-      mark: index,
-      color: "♦️",
-    });
+  const marks = Object.values(Mark);
+  const colors = Object.values(Color);
+  for (const m of marks) {
+    for (const c of colors) {
+      deck.push({
+        color: c,
+        mark: m,
+      });
+    }
   }
   return deck;
 }
@@ -33,17 +46,7 @@ function createDeck(): Deck {
 function printDeck(deck: Deck) {
   let result = "\n";
   deck.forEach((card, i) => {
-    let str = card.color;
-    let mark = card.mark;
-    if (mark <= 10) {
-      str += card.mark;
-    } else if (mark === 11) {
-      str += "J";
-    } else if (mark === 12) {
-      str += "Q";
-    } else if (mark === 13) {
-      str += "K";
-    }
+    let str = card.color + card.mark;
     result += str + "\t";
     if ((i + 1) % 4 === 0) {
       result += "\n";
